@@ -47,44 +47,49 @@ Easy
 ```
 
 ## Solution
-1. **Initial Thoughts:**
+## 1. Initial Thoughts:
+- This problem asks for the area of the largest triangle formed by any three points in a given array of points.
+- The first step is to notice that the area of a triangle can be computed using the cross product of two vectors formed by the three points.
+- Since we have an array of points, we can compute the cross product for all possible combinations of three points and take the maximum.
 
-   - The problem is about finding the area of the largest triangle that can be formed by any three points in a given array of points.
-   - We can use the Shoelace formula to calculate the area of a triangle given its three vertices.
-   - We can iterate over all possible combinations of three points and calculate the area of the triangle formed by them.
-   - The time complexity of this approach is O(n^3), where n is the number of points.
-
-2. **Solution Implementation:**
-
+## 2. Solution Implementation:
 ```python
 from typing import List
 
 def largestTriangleArea(points: List[List[int]]) -> float:
     """
-    Calculate the area of the largest triangle that can be formed by any three different points in the given array of points.
+    :param points: A list of points in the X-Y plane.
+    :return: The area of the largest triangle that can be formed by any three different points.
     """
+    n = len(points)
     max_area = 0.0
 
-    for i in range(len(points)):
-        for j in range(i + 1, len(points)):
-            for k in range(j + 1, len(points)):
-                area = abs((points[i][0] * (points[j][1] - points[k][1]) +
-                            points[j][0] * (points[k][1] - points[i][1]) +
-                            points[k][0] * (points[i][1] - points[j][1])) / 2.0)
+    for i in range(n):
+        for j in range(i+1, n):
+            for k in range(j+1, n):
+                x1, y1 = points[i]
+                x2, y2 = points[j]
+                x3, y3 = points[k]
+                area = 0.5 * abs((x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)))
                 max_area = max(max_area, area)
 
     return max_area
 ```
 
-3. **Solution Explanation:**
+## 3. Solution Explanation:
+- The function `largestTriangleArea` takes a list of points as input and returns the area of the largest triangle formed by any three different points.
+- The function computes the cross product for all possible combinations of three points and takes the maximum.
+- The cross product is computed using the formula:
+```
+area = 0.5 * abs((x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)))
+```
+where `(x1, y1)`, `(x2, y2)`, and `(x3, y3)` are the coordinates of the three points.
+- The absolute value of the cross product is used to ensure that the area is positive.
+- The maximum area is then returned as the result.
 
-   - We iterate over all possible combinations of three points and calculate the area of the triangle formed by them using the Shoelace formula.
-   - We keep track of the maximum area and return it at the end.
-
-4. **Complexity Analysis:**
-
-   - Time complexity: O(n^3), where n is the number of points. We iterate over all possible combinations of three points, which takes O(n^3) time.
-   - Space complexity: O(1), as we only store a few variables.
+## 4. Complexity Analysis:
+- Time complexity: O(n^3) - The function computes the cross product for all possible combinations of three points, so the time complexity is O(n^3), where n is the number of points in the input list.
+- Space complexity: O(1) - The function does not use any additional data structures, so the space complexity is O(1).
 
 ## Topics
 Array, Math, Geometry
@@ -92,4 +97,4 @@ Array, Math, Geometry
 ## Author
 [ohkrahul](https://github.com/ohkrahul)
 
-Solved on: 2024-12-01
+Solved on: 2025-01-15
