@@ -55,80 +55,37 @@ Easy
 ```
 
 ## Solution
-## 1. Initial Thoughts:
-### Problem analysis
-- The problem is to determine if two binary trees are leaf-similar.
-- Leaf-similar means that the values of the leaves of the two trees, from left to right, are the same.
+1. **Initial Thoughts:**
+   - The key observation is that we can traverse both trees at the same time, and check if the values of the leaves are the same.
+   - If the values of the leaves are different, then the trees are not leaf-similar.
+   - If the values of the leaves are the same, then we check if the left and right subtrees are leaf-similar.
 
-### Key Observations:
-
-- The leaf values can be obtained by performing a depth-first search on each tree.
-- The leaf values can be stored in a list or an array.
-- The two lists of leaf values can then be compared to determine if the trees are leaf-similar.
-
-### Possible Approaches:
-
-- One possible approach is to perform a depth-first search on each tree and store the leaf values in two separate lists. The lists can then be compared to determine if the trees are leaf-similar.
-- Another possible approach is to perform a depth-first search on both trees at the same time. When a leaf is encountered on one tree, the leaf value is compared to the leaf value on the other tree. If the leaf values are not the same, the trees are not leaf-similar. If all the leaf values are the same, the trees are leaf-similar.
-
-## 2. Solution Implementation
+2. **Solution Implementation:**
 ```python
 def leafSimilar(root1, root2):
-  """
-  :type root1: TreeNode
-  :type root2: TreeNode
-  :rtype: bool
-  """
-  # Initialize two empty lists to store the leaf values.
-  leaves1 = []
-  leaves2 = []
+    # Check if the trees are empty
+    if not root1 and not root2:
+        return True
+    if not root1 or not root2:
+        return False
 
-  # Perform a depth-first search on the first tree and store the leaf values in the first list.
-  def dfs1(node):
-    if not node:
-      return
-    
-    if not node.left and not node.right:
-      leaves1.append(node.val)
-    else:
-      dfs1(node.left)
-      dfs1(node.right)
-  
-  # Perform a depth-first search on the second tree and store the leaf values in the second list.
-  def dfs2(node):
-    if not node:
-      return
-    
-    if not node.left and not node.right:
-      leaves2.append(node.val)
-    else:
-      dfs2(node.left)
-      dfs2(node.right)
+    # Check if the values of the leaves are the same
+    if root1.val != root2.val:
+        return False
 
-  # Perform the depth-first searches.
-  dfs1(root1)
-  dfs2(root2)
-  
-  # Check if the two lists are equal.
-  return leaves1 == leaves2
+    # Check if the left and right subtrees are leaf-similar
+    return leafSimilar(root1.left, root2.left) and leafSimilar(root1.right, root2.right)
 ```
 
-## 3. Solution Explanation:
+3. **Solution Explanation:**
+   - The function `leafSimilar` takes two binary trees as input, and returns `True` if the trees are leaf-similar, and `False` otherwise.
+   - The function first checks if the trees are empty. If both trees are empty, then they are leaf-similar. If one of the trees is empty and the other is not, then they are not leaf-similar.
+   - If the trees are not empty, the function checks if the values of the leaves are the same. If the values of the leaves are different, then the trees are not leaf-similar.
+   - If the values of the leaves are the same, then the function checks if the left and right subtrees are leaf-similar. If the left and right subtrees are leaf-similar, then the trees are leaf-similar.
 
-The solution performs a depth-first search on each tree and stores the leaf values in two separate lists. The lists are then compared to determine if the trees are leaf-similar.
-
-The `dfs1` function performs a depth-first search on the first tree and stores the leaf values in the `leaves1` list. The `dfs2` function performs a depth-first search on the second tree and stores the leaf values in the `leaves2` list.
-
-After the depth-first searches have been performed, the `leaves1` and `leaves2` lists are compared to determine if the trees are leaf-similar. If the lists are equal, the trees are leaf-similar. Otherwise, the trees are not leaf-similar.
-
-## 4. Complexity Analysis:
-### Time complexity: O(N)
-
-The solution performs a depth-first search on both trees. The time complexity of a depth-first search is O(N), where N is the number of nodes in the tree. Therefore, the time complexity of the solution is O(N).
-
-### Space complexity: O(N)
-
-The solution stores the leaf values in two lists. The space complexity of storing a list is O(N), where N is the number of elements in the list. Therefore, the space complexity of the solution is O(N).
+4. **Complexity Analysis:**
+   - Time complexity: O(n), where n is the number of nodes in the trees.
+   - Space complexity: O(n), where n is the number of nodes in the trees.
 
 ## Topics
 Tree, Depth-First Search, Binary Tree
@@ -136,4 +93,4 @@ Tree, Depth-First Search, Binary Tree
 ## Author
 [ohkrahul](https://github.com/ohkrahul)
 
-Solved on: 2025-01-10
+Solved on: 2025-02-12
